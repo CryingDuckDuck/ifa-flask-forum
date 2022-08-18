@@ -1,30 +1,36 @@
-import os
-from flask import Flask, render_template
-from blueprints.admin import admin_pages
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from dotenv import load_dotenv
 
-db = SQLAlchemy()
+load_dotenv()
 
+app = Flask(__name__)
+app.config.from_prefixed_env()
+db = SQLAlchemy(app)
 
-def create_app():
-    from models.user import User
+from routes import *
+from models import *
 
-    app = Flask(__name__)
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["SQLALCHEMY_DATABASE_URI"]
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
+db.create_all()
 
-    with app.app_context():
-        db.init_app(app)
-        db.drop_all()
-        db.create_all()
+db.session.bulk_save_objects([
+    Role(name="admin"),
+    Role(name="user")
+])
+db.session.commit()
 
-    app.register_blueprint(admin_pages, url_prefix="/admin")
-    return app
+# bulk_save_objects won't trigger events (user => before_insert)
+db.session.add(
+    User(email="admin@admin.ch", password="password", username="admin", role_id=1)
+)
+db.session.add(
+    User(email="user@user.ch", password="password", username="user", role_id=2)
+)
+db.session.commit()
 
-
-app = create_app()
-
-
-@app.route("/")
-def index():
-    return render_template("index.html")
+db.session.bulk_save_objects([
+    Post(title="test post", body="post bodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybody", user_id=1),
+    Post(title="test post 2", body="post bodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybody", user_id=1),
+    Post(title="test post 3", body="post bodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybodybody", user_id=1)
+])
+db.session.commit()

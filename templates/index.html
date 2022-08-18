@@ -6,13 +6,13 @@
 
 {% block content %}
     <h1>This is the starting page</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis blandit massa turpis, et placerat sem bibendum quis. Etiam egestas tortor sit amet egestas varius. Ut enim urna, consequat a ultricies eget, vestibulum fermentum orci. Sed non hendrerit lorem. Mauris mollis mi in nisl gravida consectetur. Integer posuere sem at ornare ultricies. Curabitur non enim tortor. Curabitur accumsan diam elit, nec viverra nisl accumsan in. Praesent nec iaculis turpis, vel aliquam purus. In feugiat ligula sit amet rhoncus aliquet. Aliquam et varius justo. Vivamus pharetra tellus in augue venenatis dapibus. Quisque nibh justo, molestie vel nulla in, mollis interdum metus.
+    {%- for post in posts %}
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.body }}</p>
+        <date>{{ post.posted_at.strftime("%d-%m-%Y, %H:%M") }}</date>
+    {% endfor %}
 
-Maecenas quis ex vel mauris accumsan tristique. Pellentesque congue, massa tempus rhoncus laoreet, enim libero fermentum neque, sed ultricies lacus sapien sed metus. Pellentesque tincidunt leo quis tortor sagittis eleifend. Sed in turpis nunc. Donec vulputate leo nulla, ac lacinia sapien pulvinar id. Duis ornare sagittis auctor. Etiam ut magna augue. Nullam fringilla luctus elit, varius fringilla enim rutrum a.
-
-Sed turpis dolor, porttitor in dapibus quis, interdum ac nulla. Suspendisse pellentesque, lorem quis placerat elementum, lacus libero placerat lorem, vehicula vehicula augue erat eu quam. Praesent et consequat neque. Fusce eget tellus in lectus lacinia sollicitudin sed eget lacus. Proin lectus metus, vulputate non massa nec, ornare venenatis nisi. Donec ac auctor quam, ut vehicula sapien. Cras nec lobortis magna. Donec eu elit vitae mi consequat vestibulum. Duis sollicitudin posuere egestas.
-
-Quisque vitae risus maximus lorem tempus aliquet quis et nisl. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nulla facilisi. Aliquam erat volutpat. Vivamus consectetur venenatis velit, a auctor dolor sagittis quis. Nam vitae euismod neque. Fusce ornare felis placerat placerat auctor. Ut volutpat dui lacus, a suscipit risus tincidunt eu. Vestibulum vehicula auctor elementum. Phasellus nec ipsum tincidunt, convallis lacus at, malesuada diam. Vivamus imperdiet dui a augue vehicula fermentum. Sed eget est ut sapien luctus efficitur id a ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum nec blandit quam.
-
-Nam tempus vel dolor at tristique. Sed ac velit fringilla, malesuada ipsum sed, tristique quam. Sed ultricies eros vitae nisl laoreet maximus. Pellentesque posuere sagittis ante, sit amet interdum tellus bibendum sit amet. Nam sit amet tincidunt quam. Vivamus nec dui sed eros ornare sagittis ut sed nisi. Donec pellentesque quam eu quam congue porta. Nullam laoreet pharetra felis eu mattis. Proin imperdiet faucibus diam, id lacinia lacus finibus et. Ut eget turpis accumsan, rutrum felis eu, efficitur nibh. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed mi orci, porttitor sit amet auctor vel, bibendum sit amet felis. Nullam a aliquam risus, vel interdum nisl. Aliquam lobortis dolor eros, egestas faucibus elit porta at.</p>
+    {%- for user in users %}
+        <p>{{ user.password }}</p>
+    {% endfor %}
 {% endblock %}
