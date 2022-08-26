@@ -14,6 +14,7 @@ login_manager.login_view = "login"
 from routes import *
 from models import *
 
+db.drop_all()
 db.create_all()
 
 db.session.bulk_save_objects([
