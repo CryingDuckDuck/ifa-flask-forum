@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12  offset-lg-4 col-lg-4">
+                <h1>Login</h1>
+                <form method="post" action="/login" novalidate>
+                    {{ form.hidden_tag() }}
+                    <div class="mb-3">
+                        {{ form.email.label(class_="form-label") }}
+                        {{ form.email(class_="form-control") }}
+                        {% for error in form.email.errors %}
+                            <div class="form-text text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.password.label(class_="form-label") }}
+                        {{ form.password(class_="form-control") }}
+                        {% for error in form.password.errors %}
+                            <div class="form-text text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-3 form-check">
+                        {{ form.remember_me.label(class_="form-check-label") }}
+                        {{ form.remember_me(class_="form-check-input") }}
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        {{ form.submit(class_="btn btn-primary btn-block") }}
+                        <div class="mr-3 ml-3"></div>
+                        <button class="btn btn-primary btn-block">
+                            <a class="text-decoration-none text-light" href="{{ url_for("register") }}">Registrieren</a>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        {% for message in get_flashed_messages() %}
+            <div class="form-text text-danger">{{ message }}</div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

@@ -1,17 +1,14 @@
 from flask import render_template
-from flask_login import login_required
 from sqlalchemy.orm import joinedload
 
 from app import app
-from models import Post, User
+from models import Post
 
 
 @app.route("/")
-@login_required
 def all_posts():
     posts = Post.query.options(joinedload("user")).all()
-    users = User.query.all()
-    return render_template("index.html", posts=posts, users=users)
+    return render_template("posts/index.html", posts=posts)
 
 
 @app.route("/posts/<slug>")

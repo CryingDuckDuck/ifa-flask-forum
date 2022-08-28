@@ -13,7 +13,7 @@ from models import User, Role
 class LoginForm(FlaskForm):
     email = StringField('Email',
                         validators=[InputRequired("Bitte geben Sie eine Mailadresse an"), Length(1, 64), Email()])
-    password = PasswordField("Passwort", validators=[InputRequired()])
+    password = PasswordField("Passwort", validators=[InputRequired("Bitte geben Sie ein Passwort an")])
     remember_me = BooleanField("Eingeloggt bleiben")
     submit = SubmitField("Anmelden")
 
@@ -23,12 +23,12 @@ class LoginForm(FlaskForm):
 
 class RegistrationForm(FlaskForm):
     username = StringField('Benutzername',
-                           validators=[InputRequired("Bitte geben Sie einen Benutzername an"), Length(1, 64)])
+                           validators=[InputRequired("Bitte geben Sie einen Benutzernamen an"), Length(1, 64)])
     email = StringField('Email',
                         validators=[InputRequired("Bitte geben Sie eine Mailadresse an"), Length(1, 64), Email()])
     password = PasswordField("Passwort",
-                             validators=[InputRequired(), EqualTo('confirm_password', message='Passwords must match')])
-    confirm_password = PasswordField("Passwort bestätigen", validators=[InputRequired()])
+                             validators=[InputRequired("Bitte geben Sie ein Passwort ein"), EqualTo('confirm_password', message='Passwörter stimmen nicht überein')])
+    confirm_password = PasswordField("Passwort bestätigen", validators=[InputRequired("Passwörter stimmen nicht überein")])
     submit = SubmitField("Registrieren")
 
     def __init__(self, *args, **kwargs):
@@ -57,7 +57,7 @@ def login():
             return redirect("/")
         else:
             flash("Ungültige Logindaten")
-    return render_template('login.html', form=form)
+    return render_template('auth/login.html', form=form)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -76,4 +76,4 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             return redirect("/login")
-    return render_template('register.html', form=form)
+    return render_template('auth/register.html', form=form)

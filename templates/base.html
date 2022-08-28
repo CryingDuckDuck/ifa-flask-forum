@@ -8,19 +8,32 @@
           integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 </head>
 <body>
-<div class="container">
-    <h1>flask forum</h1>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+    }
 
-    {% if current_user.is_authenticated %}
-        <h1>logged in as {{ current_user.username }}</h1>
-        <a href="{{ url_for("profile") }}">Profil</a>
-        <a href="{{ url_for("logout") }}">Logout</a>
-    {% else %}
-        <a href="{{ url_for("login") }}">Login</a>
-    {% endif %}
+    .container-fluid {
+        padding: 0;
+    }
 
-
-    {% block content %}{% endblock %}
+    .navbar {
+        padding: 0.5em;
+    }
+</style>
+<div class="container-fluid">
+    {% include 'nav.html' %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
 </div>
 
 
