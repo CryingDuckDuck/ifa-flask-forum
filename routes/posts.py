@@ -11,16 +11,7 @@ def all_posts():
     return render_template("posts/index.html", posts=posts)
 
 
-@app.route("/posts/<slug>")
-def post_by_slug(slug):
-    return "post by slug"
-
-
-@app.route("/posts/create")
-def create_post():
-    return "create post"
-
-
-@app.route("/posts/<slug>/edit")
-def edit_post():
-    return "edit post"
+@app.route("/posts/<post_id>")
+def post_by_id(post_id):
+    post = Post.query.options(joinedload("user"), joinedload("comments"), joinedload("comments.user")).get(post_id)
+    return render_template("posts/id.html", post=post)

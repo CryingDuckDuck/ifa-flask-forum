@@ -5,9 +5,18 @@
 {% endblock %}
 
 {% block content %}
-    {%- for post in posts %}
-        <h2>{{ post.title }}</h2>
-        <p>{{ post.body }}</p>
-        <date>{{ post.posted_at.strftime("%d-%m-%Y, %H:%M") }}</date> <span>posted by {{ post.user.username }}</span>
-    {% endfor %}
+    <ul class="list-group mt-1">
+        {%- for post in posts %}
+            <li class="list-group-item">
+                <a class="text-decoration-none text-dark" href="{{ url_for("post_by_id", post_id=post.id) }}">
+                    <div class="d-flex justify-content-between">
+                        <div class="badge bg-primary">{{ post.posted_at.strftime("%d-%m-%Y, %H:%M") }}</div>
+                        <div class="badge bg-secondary">{{ post.comment_count }} Comments</div>
+                    </div>
+                    <h2>{{ post.title }}</h2>
+                    <span>by {{ post.user.username }}</span>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

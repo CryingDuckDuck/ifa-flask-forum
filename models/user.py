@@ -13,6 +13,7 @@ class User(db.Model, UserMixin):
     role_id = db.Column(db.Integer, db.ForeignKey("role.id"))
     role = db.relationship("Role")
     posts = db.relationship("Post", back_populates="user")
+    comments = db.relationship("Comment", back_populates="user")
 
     def check_password(self, password):
         return checkpw(password.encode("utf-8"), self.password.encode("utf-8"))

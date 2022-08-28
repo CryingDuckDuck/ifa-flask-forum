@@ -1,5 +1,5 @@
 from app import app, db
-from models import Role, User, Post
+from models import Role, User, Post, Comment
 
 
 @app.cli.command("seed-db")
@@ -50,5 +50,11 @@ def seed_db():
                   "Curabitur vel faucibus lectus. Praesent venenatis nunc in ultrices mattis. Pellentesque dui nibh, "
                   "dignissim id viverra non, rutrum nec orci. Vestibulum a ex dui.",
              user_id=2),
+    ])
+    db.session.commit()
+
+    db.session.bulk_save_objects([
+        Comment(text="First comment", post_id=1, user_id=1),
+        Comment(text="Second comment", post_id=1, user_id=2)
     ])
     db.session.commit()

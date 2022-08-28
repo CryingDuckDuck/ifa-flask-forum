@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+    index.html
+{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between mt-3">
+        <div class="badge bg-primary">{{ post.posted_at.strftime("%d-%m-%Y, %H:%M") }}</div>
+        <div class="badge bg-secondary">by {{ post.user.username }}</div>
+    </div>
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.body }}</p>
+
+    <ul class="list-group mt-1">
+        {%- for comment in post.comments %}
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between">
+                    <div class="badge bg-primary">{{ comment.posted_at.strftime("%d-%m-%Y, %H:%M") }}</div>
+                    <div class="badge bg-secondary">by {{ comment.user.username }}</div>
+                </div>
+                <p>{{ comment.text }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
