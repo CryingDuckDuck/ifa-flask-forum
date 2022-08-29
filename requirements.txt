@@ -7,7 +7,6 @@ Cython==0.29.32
 dnspython==2.2.1
 email-validator==1.2.1
 Flask==2.2.2
-Flask-Cache==0.13.1
 Flask-Login==0.6.2
 Flask-SQLAlchemy==2.5.1
 Flask-WTF==1.0.1

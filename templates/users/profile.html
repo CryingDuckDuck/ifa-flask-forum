@@ -1,9 +1,21 @@
 {% extends "base.html" %}
 
 {% block title %}
-    profile.html
+    Profil von {{ current_user.username }}
 {% endblock %}
 
 {% block content %}
-    <h1>Hello, {{ current_user.username }}!</h1>
+    <h1>Hallo, {{ current_user.username }}!</h1>
+    {% if current_user.is_admin %}
+        <p>Du bist berechtigt, Beiträge und Kommentare anderer Benutzer zu löschen und die Role von anderen Benutzern zu ändern.</p>
+    {% endif %}
+
+    <h2>Deine Beiträge:</h2>
+    <ul>
+        {% for post in posts %}
+            <li>
+                <a href="{{ url_for("post_by_id", post_id=post.id) }}">{{ post.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

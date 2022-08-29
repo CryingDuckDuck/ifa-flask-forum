@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, abort, request
+from flask import render_template, redirect, url_for, abort
 from flask_login import current_user, login_required
 from flask_wtf import FlaskForm
 from sqlalchemy.orm import joinedload
@@ -7,19 +7,29 @@ from wtforms.validators import InputRequired, Length
 from wtforms.widgets import TextArea
 
 from app import app, db
-from models import Post
+from models import Post, Comment
 
 
 class PostForm(FlaskForm):
     title = StringField('Titel',
                         validators=[InputRequired("Bitte geben Sie einen Titel an"), Length(1, 64)])
     body = StringField('Text',
-                       validators=[InputRequired("Bitte geben Sie einen Text an"), Length(1, 64)], widget=TextArea())
+                       validators=[InputRequired("Bitte geben Sie einen Text an"), Length(1, 255)], widget=TextArea())
 
     submit = SubmitField("Beitrag erstellen")
 
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
+
+
+class CommentForm(FlaskForm):
+    text = StringField('Text',
+                       validators=[InputRequired("Bitte geben Sie einen Text an"), Length(1, 255)], widget=TextArea())
+
+    submit = SubmitField("Kommentar erstellen")
+
+    def __init__(self, *args, **kwargs):
+        super(CommentForm, self).__init__(*args, **kwargs)
 
 
 @app.route("/")
@@ -28,7 +38,7 @@ def all_posts():
     return render_template("posts/index.html", posts=posts)
 
 
-@app.route("/posts/<post_id>")
+@app.route("/posts/<post_id>", methods=["GET", "POST"])
 def post_by_id(post_id):
     post = Post.query.options(
         joinedload("user"),
@@ -39,7 +49,16 @@ def post_by_id(post_id):
     if post is None:
         return abort(404)
 
-    return render_template("posts/id.html", post=post)
+    form = CommentForm()
+
+    if form.validate_on_submit():
+        text = form.text.data
+        comment = Comment(text=text, user_id=current_user.id, post_id=post.id)
+        db.session.add(comment)
+        db.session.commit()
+        form.text.data = ""
+
+    return render_template("posts/id.html", post=post, form=form)
 
 
 @app.route("/posts/create", methods=["GET", "POST"])
@@ -108,5 +127,23 @@ def delete_post(post_id):
     db.session.delete(post)
     db.session.commit()
 
-    next_page = request.args.get("next")
-    return redirect(next_page if next_page is not None else "/")
+    return redirect("/")
+
+
+@app.route("/comments/<comment_id>/delete", methods=["POST"])
+@login_required
+def delete_comment(comment_id):
+    comment = Comment.query.get(comment_id)
+
+    if comment is None:
+        return abort(404)
+
+    if comment.user_id != current_user.id and not current_user.is_admin:
+        return abort(401)
+
+    post_id = comment.post_id
+
+    db.session.delete(comment)
+    db.session.commit()
+
+    return redirect(url_for("post_by_id", post_id=post_id))
