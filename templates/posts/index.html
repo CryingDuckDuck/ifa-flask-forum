@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-    index.html
+    Beiträge
 {% endblock %}
 
 {% block content %}
@@ -11,10 +11,10 @@
                 <a class="text-decoration-none text-dark" href="{{ url_for("post_by_id", post_id=post.id) }}">
                     <div class="d-flex justify-content-between">
                         <div class="badge bg-primary">{{ post.posted_at.strftime("%d-%m-%Y, %H:%M") }}</div>
-                        <div class="badge bg-secondary">{{ post.comment_count }} Comments</div>
+                        <div class="badge bg-secondary">{{ post.comment_count }} Kommentare</div>
                     </div>
                     <h2>{{ post.title }}</h2>
-                    <span>by {{ post.user.username }}</span>
+                    <span>von {{ post.user.username }}</span>
                 </a>
             </li>
         {% endfor %}

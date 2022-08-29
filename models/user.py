@@ -15,6 +15,10 @@ class User(db.Model, UserMixin):
     posts = db.relationship("Post", back_populates="user")
     comments = db.relationship("Comment", back_populates="user")
 
+    @property
+    def is_admin(self):
+        return self.role.name.lower() == "admin"
+
     def check_password(self, password):
         return checkpw(password.encode("utf-8"), self.password.encode("utf-8"))
 
