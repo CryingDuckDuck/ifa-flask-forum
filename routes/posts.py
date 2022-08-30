@@ -13,7 +13,7 @@ from models import Post, Comment
 class PostForm(FlaskForm):
     title = StringField('Titel',
                         validators=[InputRequired("Bitte geben Sie einen Titel an"), Length(1, 64)])
-    body = StringField('Text',
+    text = StringField('Text',
                        validators=[InputRequired("Bitte geben Sie einen Text an"), Length(1, 255)], widget=TextArea())
 
     submit = SubmitField("Beitrag erstellen")
@@ -68,9 +68,9 @@ def create_post():
 
     if form.validate_on_submit():
         title = form.title.data
-        body = form.body.data
+        text = form.text.data
         user_id = current_user.id
-        post = Post(title=title, body=body, user_id=user_id)
+        post = Post(title=title, text=text, user_id=user_id)
         db.session.add(post)
         db.session.commit()
         return redirect("/")
@@ -99,7 +99,7 @@ def edit_post(post_id):
 
     if form.validate_on_submit():
         post.title = form.title.data
-        post.body = form.body.data
+        post.text = form.text.data
         db.session.commit()
         return redirect("/")
 

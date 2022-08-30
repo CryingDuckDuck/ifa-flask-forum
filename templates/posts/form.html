@@ -20,9 +20,9 @@
                         {% endfor %}
                     </div>
                     <div class="mb-3">
-                        {{ form.body.label(class_="form-label") }}
-                        {{ form.body(class_="form-control") }}
-                        {% for error in form.body.errors %}
+                        {{ form.text.label(class_="form-label") }}
+                        {{ form.text(class_="form-control") }}
+                        {% for error in form.text.errors %}
                             <div class="form-text text-danger">{{ error }}</div>
                         {% endfor %}
                     </div>
