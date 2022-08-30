@@ -13,4 +13,5 @@ login_manager.login_view = "login"
 
 from routes import *
 from models import *
+from filters import *
 from commands import *

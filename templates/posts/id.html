@@ -6,7 +6,7 @@
 
 {% block content %}
     <div class="d-flex justify-content-between mt-3">
-        <div class="badge bg-primary">{{ post.posted_at.strftime("%d-%m-%Y, %H:%M") }}</div>
+        <div class="badge bg-primary">{{ post.posted_at | datetime }}</div>
         <div class="badge bg-secondary">von {{ post.user.username }}</div>
     </div>
 
@@ -42,7 +42,7 @@
         {%- for comment in post.comments %}
             <li class="list-group-item">
                 <div class="d-flex justify-content-between">
-                    <div class="badge bg-primary">{{ comment.posted_at.strftime("%d-%m-%Y, %H:%M") }}</div>
+                    <div class="badge bg-primary">{{ comment.posted_at | datetime }}</div>
                     <div class="badge bg-secondary">von {{ comment.user.username }}</div>
                 </div>
                 <p class="mt-2">{{ comment.text }}</p>
