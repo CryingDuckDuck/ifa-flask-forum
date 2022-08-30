@@ -28,7 +28,7 @@
                 {% endfor %}
             </div>
             <div class="d-flex justify-content-between mb-3">
-                {{ form.submit(class_="btn btn-primary btn-block") }}
+                {{ form.submit(class_="btn btn-sm btn-primary btn-block") }}
             </div>
         </form>
         {% if page == "edit" %}
@@ -49,7 +49,7 @@
 
                 {% if current_user.id == comment.user_id or current_user.is_admin %}
                     <form action="{{ url_for("delete_comment", comment_id=comment.id) }}" method="POST" novalidate>
-                        <button class="btn btn-danger" type="submit">Kommentar löschen</button>
+                        <button class="btn btn-sm btn-danger" type="submit">Kommentar löschen</button>
                     </form>
                 {% endif %}
             </li>

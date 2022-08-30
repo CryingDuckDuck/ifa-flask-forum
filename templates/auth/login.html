@@ -32,13 +32,16 @@
                             <a class="text-decoration-none text-light" href="{{ url_for("register") }}">Registrieren</a>
                         </button>
                     </div>
+                    <div class="mb-3">
+                        {% for message in get_flashed_messages() %}
+                            <div class="form-text text-danger">{{ message }}</div>
+                        {% endfor %}
+                    </div>
                 </form>
             </div>
 
         </div>
-        {% for message in get_flashed_messages() %}
-            <div class="form-text text-danger">{{ message }}</div>
-        {% endfor %}
+
     </div>
 
 {% endblock %}

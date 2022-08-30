@@ -6,4 +6,38 @@
 
 {% block content %}
     <h1>Benutzerverwaltung</h1>
+    <div class="mb-3">
+        {% for message in get_flashed_messages() %}
+            <div class="form-text text-info">{{ message }}</div>
+        {% endfor %}
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Benutzername</th>
+            <th scope="col">Email</th>
+            <th scope="col">Role</th>
+            <th scope="col">Neue Role</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+            <th scope="row">{{ user.id }}</th>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role.name }}</td>
+            <th>
+                <form method="POST" action="{{ url_for("manage_users") }}" novalidate>
+                    {{ form.csrf_token() }}
+                    {{ form.user_id(value=user.id) }}
+                    {{ form.role(class_="form-select") }}
+                    {{ form.submit(class_="btn btn-sm btn-primary mt-3") }}
+                </form>
+            </th>
+        {% endfor %}
+        </tr>
+        </tbody>
+    </table>
 {% endblock %}
