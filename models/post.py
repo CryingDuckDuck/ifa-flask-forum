@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlalchemy import func, select
 from sqlalchemy.orm import column_property
 
@@ -9,7 +11,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String, nullable=False)
     body = db.Column(db.Text, nullable=False)
-    posted_at = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
+    posted_at = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     user = db.relationship("User", back_populates="posts")
     comments = db.relationship("Comment", back_populates="post")
