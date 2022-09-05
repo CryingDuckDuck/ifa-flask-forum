@@ -6,9 +6,9 @@
 - Postgresql installieren: https://www.postgresql.org/download/
 
 ```bash
-    $ git clone https://github.com/CryingDuckDuck/ifa-praxisarbeit
+    $ git clone https://github.com/CryingDuckDuck/ifa-flask-forum
     
-    $ cd ifa-praxisarbeit
+    $ cd ifa-flask-forum
     
     # virtualenv generieren
     $ python -m venv venv
