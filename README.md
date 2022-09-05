@@ -1,4 +1,4 @@
-# IPA Praxisarbeit - Flask Forum
+# IFA Praxisarbeit - Flask Forum
 
 ## Lokale Entwicklungsumgebung aufsetzen
 
